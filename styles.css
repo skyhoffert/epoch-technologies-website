@@ -25,6 +25,7 @@ p {
     background-color: black;
     height: 90px;
     width: 100%;
+    opacity: 0;
 }
 
 #header_img {
@@ -69,11 +70,22 @@ button:hover {
 }
 
 .main {
-    background-color: #333333;
+    background-color: #222222;
     color: white;
 }
 
 .col-sm-3 {
     margin: 0;
     padding: 0;
+}
+
+.main_image {
+    width: 100%;
+    height: auto;
+    opacity: 0;
+}
+
+.hi {
+    opacity: 0;
+    font-size: 30px;
 }
