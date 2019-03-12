@@ -72,6 +72,7 @@ button:hover {
 .main {
     background-color: #222222;
     color: white;
+    padding: 10px;
 }
 
 .col-sm-3 {
@@ -87,5 +88,6 @@ button:hover {
 
 .hi {
     opacity: 0;
-    font-size: 30px;
+    font-size: 60px;
+    letter-spacing: 1px;
 }
