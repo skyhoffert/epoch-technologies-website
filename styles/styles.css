@@ -72,7 +72,15 @@ button:hover {
 .main {
     background-color: #222222;
     color: white;
-    padding: 10px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.capabilities {
+    background-color: #222222;
+    color: white;
+    padding-left: 35%;
+    padding-right: 35%;
 }
 
 .main_p {
@@ -94,11 +102,6 @@ button:hover {
     opacity: 100;
 }
 
-.hi {
-    opacity: 100;
-    font-size: 60px;
-    letter-spacing: 1px;
-}
 /*
 * These attributes are used on the index page only to fade using index_scripts.js script
 */
@@ -109,16 +112,37 @@ button:hover {
     opacity: 0;
 }
 
-.index_hi {
+.index_tagline {
     opacity: 0;
     font-size: 60px;
     letter-spacing: 1px;
+}
+
+.index_motto {
+    opacity: 0;
+    font-size: 20px;
 }
 
 .index_main_image {
     width: 100%;
     height: auto;
     opacity: 0;
+}
+
+.index_cubesat_img {
+    width: 80%;
+    opacity: 0;
+}
+
+.index_cubesat_description {
+    font-size: 26px;
+    opacity: 0;
+}
+
+.index_cubesat_link {
+    font-size: 20px;
+    opacity: 0;
+    color: #0066ff;
 }
 
 .center_p {

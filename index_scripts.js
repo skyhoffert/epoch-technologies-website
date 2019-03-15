@@ -1,63 +1,69 @@
-var wait_time = 200;
-var fade_time_header = 500;
-var fade_time_main_image = 1000;
-var fade_time_hi = 2000;
-var started_fade = false;
-var started_fadeHi = false;
+
+var appear_offset = 100;
 var start_time = 0;
+var started = false;
 
-var interval = setInterval(fade, 1000/30);
-var inthi = setInterval(fadeHi, 1000/30);
+var fadechecks = setInterval(update, 1000/30);
 
-function fade()
+var fades = [
+    {"class": "index_header", "start_time": 100, "duration": 400, "type": "onstart", "alive": true},
+    {"class": "index_main_image", "start_time": 500, "duration": 800, "type": "onstart", "alive": true},
+    {"class": "index_tagline", "start_time": 0, "duration": 1500, "type": "onscreen", "activated": false, "alive": true},
+    {"class": "index_motto", "start_time": 0, "duration": 1500, "type": "onscreen", "activated": false, "alive": true},
+    {"class": "index_cubesat_img", "start_time": 0, "duration": 1500, "type": "onscreen", "activated": false, "alive": true},
+    {"class": "index_cubesat_description", "start_time": 0, "duration": 1500, "type": "onscreen", "activated": false, "alive": true},
+    {"class": "index_cubesat_link", "start_time": 0, "duration": 1500, "type": "onscreen", "activated": false, "alive": true}
+];
+
+function update()
 {
-    //if (document.title == "Epoch Technologies") {
     // wait until ready
     if (document.readyState != "complete"){ return; }
 
-    // set the start time if not set yet
-    if (!started_fade){ start_time = new Date().getTime(); started_fade = true; }
+    // set start time on first entrance
+    if (!started){ start_time = new Date().getTime(); started = true; }
 
     // find the elapsed time since start
     var elapsed = (new Date().getTime() - start_time);
 
-    // wait for some frames before fading in
-    if (elapsed < wait_time){ return; }
-    elapsed -= wait_time;
-
-    document.getElementsByClassName("index_header")[0].style.opacity = elapsed / fade_time_header;
-
-    // wait until header has faded in
-    if (elapsed < fade_time_header){ return; }
-    elapsed -= fade_time_header;
-
-    document.getElementsByClassName("index_main_image")[0].style.opacity = elapsed / fade_time_main_image;
-    
-    // stop running this function when complete
-    if (elapsed > fade_time_main_image){ clearInterval(interval); }
-    //}
-}
-
-function fadeHi()
-{
-    //if (document.title == "Epoch Technologies") {
-    // wait until ready
-    if (document.readyState != "complete"){ return; }
-    if (!started_fadeHi)
+    for (var i = 0; i < fades.length; i++)
     {
-        start_fadeHi = new Date().getTime();
-    }
-    else
-    {
-        var elapsed = (new Date().getTime() - start_fadeHi)
-        document.getElementsByClassName("index_hi")[0].style.opacity = elapsed / fade_time_hi;
-        
-        if (elapsed > fade_time_hi){ clearInterval(inthi); }
-    }
+        if (fades[i].alive)
+        {
+            if (fades[i].type == "onstart")
+            {
+                if (elapsed > fades[i].start_time)
+                {
+                    var myelapsed = elapsed - fades[i].start_time;
+                    document.getElementsByClassName(fades[i].class)[0].style.opacity = myelapsed / fades[i].duration;
 
-    if (document.getElementsByClassName("index_hi")[0].getBoundingClientRect().top < window.innerHeight)
-    {
-        started_fadeHi = true;
+                    if (myelapsed > fades[i].duration)
+                    {
+                        fades[i].alive = false;
+                    }
+                }
+            }
+            else if (fades[i].type == "onscreen")
+            {
+                if (fades[i].activated)
+                {
+                    var myelapsed = elapsed - fades[i].start_time;
+                    document.getElementsByClassName(fades[i].class)[0].style.opacity = myelapsed / fades[i].duration;
+
+                    if (myelapsed > fades[i].duration)
+                    {
+                        fades[i].alive = false;
+                    }
+                }
+                else
+                {
+                    if (document.getElementsByClassName(fades[i].class)[0].getBoundingClientRect().top < window.innerHeight - appear_offset)
+                    {
+                        fades[i].activated = true;
+                        fades[i].start_time = new Date().getTime() - start_time;
+                    }
+                }
+            }
+        }
     }
-    //}
 }
